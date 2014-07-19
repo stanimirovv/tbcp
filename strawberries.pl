@@ -42,7 +42,7 @@ sub Handler()
     die " You must input atleast one valid point T__T\n";
   }
 
-  $matrix[($height -1) - ($y -1)][($width - 1) - ($x -1)] = 1;
+  $matrix[($height -1) - ($y -1)][$x -1] = 1;
   print "Input y:";
   $y = <STDIN>;
   print "Input x:";
@@ -52,7 +52,7 @@ sub Handler()
   if($x-1 > 0 || $y-1 > 0)
   {
     print "Both coordinates seem ok.\n";
-    $matrix[($height - 1) - ($y-1)][($width - 1) - ($x-1)] = 1;
+    $matrix[($height - 1) - ($y-1)][$x-1] = 1;
 
   }
   else
