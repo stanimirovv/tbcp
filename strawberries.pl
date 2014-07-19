@@ -7,7 +7,6 @@ sub Handler()
   my $width = <STDIN>;
   chomp($width);
   chomp($height);
-
   print "Width: $width, height: $height\n";
   my @matrix;
   for(my $i = 0; $i < $height; $i++)
@@ -23,7 +22,10 @@ sub Handler()
   print "Input the number of days you want to see:";
   my $dayZ = <STDIN>;
   chomp($dayZ);
-
+  if($height > 1000 || $width > 1000 || $dayZ > 100)
+  {
+      die "Wrong board / day input. \n";
+  }
   # Get the two (or one) points
   my $point1 = { x => -1, y=> -1};
   my $point2 = { x => -1, y=> -1};
