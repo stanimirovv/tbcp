@@ -75,6 +75,7 @@
           <input id="segment_length" type"number"  />
           <button id="calculate_distance" onclick="PrepareInputHandler()"> Calculate Distance!</button>
       </div>
+      <p id="output" class="center"></p>
       <br/><br/>
       <div id="line_container" class="line_container">
       </div>
@@ -158,9 +159,7 @@
         }
         console.log("Uncolored line:  " + uncolored_line);
         console.log("Colored array:   " + render_line);
-        var output = document.createElement("div");
-        output.innerHTML = "Uncolored line: <b> " + uncolored_line +"</b>";
-        document.getElementById("ui-container").appendChild = output;
+        document.getElementById("output").innerHTML = "Total number of free spaces:  " + uncolored_line;
         RenderOutput(person_1, person_2, render_line);
       }
 
