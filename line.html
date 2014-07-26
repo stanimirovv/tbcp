@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lines</title>
+        <style>
+          .center{
+                  width: 300px;
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+          }
+
+          .labelNeutral{
+            height:20px;
+            width:40px;
+            border: 1px solid black;
+            background-color:gray;
+            text-align:center;
+          }
+
+          .labelLeft{
+            height:20px;
+            width:40px;
+            border: 1px solid black;
+            background-color:gray;
+            text-align:left;
+          }
+
+          .labelRight{
+            height:20px;
+            width:40px;
+            border: 1px solid black;
+            background-color:gray;
+            text-align:right;
+          }
+          .labelMutual{
+            height:20px;
+            width:40px;
+            border: 1px solid black;
+            background-color:blue;
+            text-align:center;
+          }
+
+          .boxRed{
+            height: 40px;
+            width: 40px;
+            border: 1px solid black;
+            background-color:red;
+          }
+
+          .box{
+            height: 40px;
+            width: 40px;
+            border: 1px solid black;
+          }
+
+          .line_container{
+            width: 300px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        </style>
+    </head>
+    <body>
+      <div id="ui-container" class="center" >
+          <div>Line length:</div>
+          <input id="line_length" type="number" />
+          <div>Person 1's segment:</div>
+          <input id="person1_segment" type="number" />
+          <div>Person 2's segment:</div>
+          <input id="person2_segment" type="number" />
+          <div>Minimal length:</div>
+          <input id="segment_length" type"number"  />
+          <button id="calculate_distance" onclick="PrepareInputHandler()"> Calculate Distance!</button>
+      </div>
+      <br/><br/>
+      <div id="line_container" class="line_container">
+      </div>
+    </body>
+    <script>
+      function PrepareInputHandler()
+      {
+        var line_length = document.getElementById("line_length").value;
+        if(line_length === "" || line_length < 1 || line_length > 100000)
+        {
+          alert("Error with the line_length");
+          return;
+        }
+
+        var p1_segment = document.getElementById("person1_segment").value;
+        if(p1_segment === "" || p1_segment < 1 || p1_segment > 100000)
+        {
+          alert("Error with the p1_segment");
+          return;
+        }
+
+        var p2_segment = document.getElementById("person2_segment").value;
+        if(p2_segment === "" || p2_segment < 1 || p2_segment > 100000)
+        {
+          alert("Error with the p2_segment");
+          return;
+        }
+
+        var segment_length = document.getElementById("segment_length").value;
+        if(segment_length === "" || segment_length < 1 || segment_length > 100000)
+        {
+          alert("Error with the segment_length");
+          return;
+        }
+
+        ComputateOutput(parseInt(line_length), parseInt(p1_segment), parseInt(p2_segment), parseInt(segment_length));
+      }
+
+      function ComputateOutput(line_length, p1_segment, p2_segment, segment_length)
+      {
+        var person_1 = [];
+        var person_2 = [];
+        var uncolored_line = line_length;
+        var render_line = Array.apply(null, new Array(line_length)).map(Number.prototype.valueOf,0);
+
+        // First Person Points
+        console.log("Entering ComputateOutput  "+p1_segment + "  Length:  " + line_length);
+        for(var i = 0; i <= line_length; i+=p1_segment)
+        {
+          console.log("Pushing: " + i);
+          person_1.push(i);
+        }
+        console.log(person_1);
+
+        // Second Person Points
+        for(var i = line_length; i >= 0; i-=p2_segment)
+        {
+          console.log("Pushing: " + i);
+          person_2.push(i);
+        }
+        console.log(person_2);
+
+        // Calculate the points
+        for (var i = 0; i <= person_1.length; i++)
+        {
+          for (var j = 0; j <= person_2.length; j++)
+          {
+            if(Math.abs(person_1[i] - person_2[j]) === segment_length)
+            {
+              uncolored_line -= segment_length;
+              // Color the line
+              var segment_1 = Math.min(person_1[i], person_2[j]);
+              var segment_2 = Math.max(person_1[i], person_2[j]);
+
+              for(var k = segment_1; k < segment_2; k++)
+              {
+                render_line[k] = 1;
+              }
+            }
+          }
+        }
+        console.log("Uncolored line:  " + uncolored_line);
+        console.log("Colored array:   " + render_line);
+        var output = document.createElement("div");
+        output.innerHTML = "Uncolored line: <b> " + uncolored_line +"</b>";
+        document.getElementById("ui-container").appendChild = output;
+        RenderOutput(person_1, person_2, render_line);
+      }
+
+      function RenderOutput(person_1, person_2, render_line)
+      {
+        console.log("Entering Render Output");
+        var i = 0;
+        var line_container = document.getElementById("line_container");
+        for(; i <= render_line.length; i++)
+        {
+          var label = document.createElement('div');
+          label.innerHTML = i;
+          if(person_1.indexOf(i) > -1)
+          {
+            label.className = "labelLeft";
+          }
+          else if(person_2.indexOf(i) > -1)
+          {
+            label.className = "labelRight";
+          }
+          else
+          {
+            label.className = "labelNeutral";
+          }
+          if(person_1.indexOf(i) > -1 && person_2.indexOf(i) > -1)
+          {
+            label.className = "labelMutual";
+          }
+
+          line_container.appendChild(label);
+          if( i < render_line.length)
+          {
+            var box = document.createElement('div');
+            if(render_line[i] === 1)
+            {
+              box.className = "boxRed";
+            }
+            else
+            {
+              box.className = "box";
+            }
+            line_container.appendChild(box);
+          }
+        }
+
+      }
+    </script>
+</html>
