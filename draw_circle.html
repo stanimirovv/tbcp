@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .point {
+      width:6px;
+      height:6px;
+      background: blue;
+      position:absolute;
+      border-radius:100px;
+    }
+
+    #box{
+        min-height:1px;
+        min-width:1px;
+        margin-top:150px;
+        margin-left:125px;
+        position:relative;
+    }
+  </style>
+</head>
+<body>
+  <p>Center x:</p>
+  <input id="center_x" type="number" />
+  <p>Center y:</p>
+  <input id="center_y" type="number" />
+  <p>Radius:</p>
+  <input id="radius" type="number" />
+  <p>Depth:</p>
+  <input id="depth" type="number" />
+  <br/>
+  <input type="button" onclick="GoGoCircle()" value="go!" />
+  <div id="box"></div>
+</body>
+<script>
+function GoGoCircle()
+{
+
+  var center_x = parseInt(document.getElementById("center_x").value);
+  var center_y = parseInt(document.getElementById("center_y").value);
+  var r = parseInt(document.getElementById("radius").value);
+  console.log("Center_x" + center_x + "  center_y  " + center_y + "  radius:  " + r);
+  var items = parseInt(document.getElementById("depth").value);
+  for(var i = 0; i < items; i++)
+  {
+    var x = center_x + r * Math.cos(2 * Math.PI * i / items);
+    var y = center_y + r * Math.sin(2 * Math.PI * i / items);
+    document.getElementById("box").innerHTML += "<div class='point' style='left:"+ x +"px;top:"+ y +"px'></div>";
+  }
+}
+
+</script>
+</html>
