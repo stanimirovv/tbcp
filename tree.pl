@@ -52,7 +52,7 @@ sub Main()
   #print "Dumping the tree: ", Dumper($tree);
 
   # Chose which one you want to perform:
-  #DepthTraversal($tree, 3);
+  #DepthTraversal($tree, 1);
   #WidthTraversal($tree, 1);
 }
 
