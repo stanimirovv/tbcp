@@ -6,7 +6,7 @@ sub Main()
 {
   print "Please enter the number of nodes: ";
   my $nodes = <STDIN>;
-  if($nodes > 2)
+  if($nodes < 2)
   {
     die "Take the input more seriously.\n";
   }
